@@ -14,28 +14,36 @@ public class GroceryService
 {
     @Autowired
     private GroceryRepo groceryRepo;
-    public List<GroceryItem> getAllItems()
+    public List<GroceryItem> getAllItems() 
     {
-        return groceryRepo.getAllItems();
+      return groceryRepo.findAll(); // Fetch all items from DB
     }
-    public void addItems(GroceryItem item)
-    {
-      groceryRepo.addItems(item);
-    }
-    public GroceryItem getItems( int pid) {
-      return groceryRepo.getItems(pid);
+
+  public GroceryItem getItem(int pid) 
+  {
+      return groceryRepo.findById(pid).orElse(null); // Fetch item by ID
   }
 
-
-
-
-  public GroceryItem updateItem(int pid, GroceryItem item) 
+  public GroceryItem addItem(GroceryItem item) 
   {
-    return groceryRepo.updateItem(pid, item);
+      return groceryRepo.save(item); // Save new item to DB
   }
 
-  public String deleteItem(int pid)
+  public GroceryItem updateItem(int pid, GroceryItem updatedItem) 
   {
-    return groceryRepo.deleteItem(pid);
+      GroceryItem existingItem = groceryRepo.findById(pid).orElse(null);
+      if (existingItem != null) 
+      {
+          existingItem.setName(updatedItem.getName());
+          existingItem.setCategory(updatedItem.getCategory());
+          existingItem.setPrice(updatedItem.getPrice());
+          return groceryRepo.save(existingItem); // Save updated item
+      }
+      return null;
+  }
+
+  public void deleteItem(int pid) 
+  {
+      groceryRepo.deleteById(pid); // Delete item by ID
   }
 }

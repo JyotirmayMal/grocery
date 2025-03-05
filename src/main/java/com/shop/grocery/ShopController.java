@@ -30,13 +30,13 @@ public class ShopController {
     @GetMapping("/{pid}")
     public GroceryItem getItems(@PathVariable("pid") int pid) 
     {
-        return groceryService.getItems(pid);
+        return groceryService.getItem(pid);
     }
     @PostMapping("/")
     public GroceryItem addItems(@RequestBody GroceryItem item) 
     {
-        groceryService.addItems(item);
-        return groceryService.getItems(item.getPid());
+        groceryService.addItem(item);
+        return groceryService.getItem(item.getPid());
     }
 
 
@@ -50,7 +50,8 @@ public class ShopController {
     // Delete an item
     @DeleteMapping("/{pid}")
     public String deleteItem(@PathVariable("pid") int pid) {
-        return groceryService.deleteItem(pid);
+        groceryService.deleteItem(pid);
+        return "Item deleted successfully";
     }
     
 }

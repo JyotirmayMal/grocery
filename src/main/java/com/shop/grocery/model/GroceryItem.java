@@ -1,7 +1,12 @@
 package com.shop.grocery.model;
 
-import org.springframework.stereotype.Component;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,11 +14,19 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Component
-public class GroceryItem 
-{
+@Entity
+@Table(name = "grocery_items")
+public class GroceryItem {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int pid;
+
+    @Column(nullable = false)
     private String name;
-    private String catagory;
+
+    @Column(nullable = false)
+    private String category;
+
+    @Column(nullable = false)
     private double price;
 }
